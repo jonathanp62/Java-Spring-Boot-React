@@ -109,7 +109,7 @@ tasks.named('test') {
 //   ./gradlew --no-configuration-cache bootRun[...]
 
 bootRun {
-	mainClass = 'net.jmp.spring.boot.valkey.MainApplication'
+	mainClass = 'net.jmp.spring.boot.react.MainApplication'
 	jvmArgs = [ '-Xmx1g', '--enable-native-access=ALL-UNNAMED' ]
 
 	environment("GRADLE_VERSION", "${gradle.gradleVersion}")
