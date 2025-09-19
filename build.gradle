@@ -49,11 +49,11 @@ ext {
 	project.description = 'to demonstrate Spring Boot with React'
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_24
+java.sourceCompatibility = JavaVersion.VERSION_25
 
 java {
 	toolchain {
-		languageVersion = JavaLanguageVersion.of(24)
+		languageVersion = JavaLanguageVersion.of(25)
 	}
 }
 
@@ -76,6 +76,12 @@ dependencies {
 	testRuntimeOnly		('org.junit.platform:junit-platform-launcher')
 }
 
+sourceSets {
+    main {
+        java.srcDir 'server/src/main/java'
+    }
+}
+
 tasks.compileJava {
     options.forkOptions.jvmArgs = ["-Xmx8192m", "--enable-native-access=ALL-UNNAMED"]
 }
@@ -85,7 +91,7 @@ tasks.withType(Javadoc).configureEach {
     StandardJavadocDocletOptions sjdo = options as StandardJavadocDocletOptions
 
     cjo.encoding("UTF-8")
-    cjo.addStringOption("source", "24")
+    cjo.addStringOption("source", "25")
     cjo.memberLevel = JavadocMemberLevel.PRIVATE
 
     sjdo.version(true)
