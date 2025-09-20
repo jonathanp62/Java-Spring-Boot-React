@@ -1,7 +1,7 @@
 package net.jmp.spring.boot.react.quote;
 
 /*
- * (#)QuoteRepository.java  0.1.0   09/20/2025
+ * (#)QuoteController.java  0.1.0   09/20/2025
  *
  * @author    Jonathan Parker
  * @version   0.1.0
@@ -9,7 +9,7 @@ package net.jmp.spring.boot.react.quote;
  *
  * MIT License
  *
- * Copyright (c) 2025 Jonathan M. Parker
+ * Copyright (c) 2024 Jonathan M. Parker
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,8 +30,41 @@ package net.jmp.spring.boot.react.quote;
  * SOFTWARE.
  */
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+import java.util.Random;
 
-/// The QuoteRepository interface.
-public interface QuoteRepository extends JpaRepository<Quote, Long> {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/// The quote controller.
+@RestController
+@RequestMapping("/api/quote")
+public class QuoteController {
+    /// The quote repository.
+    private final QuoteRepository repository;
+
+    /// The logger.
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    /// The constructor.
+    ///
+    /// @param  repository  net.jmp.spring.boot.react.quote.QuoteRepository
+    public QuoteController(final QuoteRepository repository) {
+        this.repository = repository;
+    }
+
+    /// The hello method.
+    ///
+    /// @return  java.lang.String
+    @GetMapping("/hello")
+    public String hello() {
+        this.logger.info("Hello, World!");
+        this.logger.debug("Hello, World, in debug.");
+
+        return "Hello, World!";
+    }
 }

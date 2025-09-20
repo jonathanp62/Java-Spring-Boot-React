@@ -70,6 +70,7 @@ dependencies {
 
 	implementation		(libs.co.elastic.logging.logback.ecs.encoder)
 	implementation		(libs.com.google.code.gson.gson)
+	implementation		(libs.com.h2database.h2)
 	implementation		(libs.net.jmp.util.logging.logging.utilities)
 
 	testImplementation	('org.springframework.boot:spring-boot-starter-test')
@@ -82,6 +83,7 @@ dependencies {
 sourceSets {
     main {
         java.srcDir 'server/src/main/java'
+        resources.srcDir 'server/src/main/resources'
     }
 }
 
@@ -128,6 +130,8 @@ tasks.register("bootRunDev") {
 		}
 	}
 
+    println("The active profile to 'dev'")
+
 	finalizedBy("bootRun")
 }
 
@@ -142,6 +146,8 @@ tasks.register("bootRunTest") {
 			systemProperty("spring.profiles.active", "testing")
 		}
 	}
+
+    println("The active profile to 'testing'")
 
 	finalizedBy("bootRun")
 }
