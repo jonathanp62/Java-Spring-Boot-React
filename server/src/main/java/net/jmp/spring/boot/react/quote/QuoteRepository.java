@@ -1,7 +1,7 @@
-package net.jmp.spring.boot.react;
+package net.jmp.spring.boot.react.quote;
 
 /*
- * (#)MainApplication.java  0.1.0   09/19/2025
+ * (#)QuoteRepository.java  0.1.0   09/20/2025
  *
  * @author    Jonathan Parker
  * @version   0.1.0
@@ -30,22 +30,8 @@ package net.jmp.spring.boot.react;
  * SOFTWARE.
  */
 
-import org.springframework.boot.SpringApplication;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-/// The main application class.
-@SpringBootApplication
-public class MainApplication {
-    /// The default constructor.
-    public MainApplication() {
-        super();
-    }
-
-    /// The main method.
-    ///
-    /// @param  args  java.lang.String[]
-    public static void main(String[] args) {
-        SpringApplication.run(MainApplication.class, args);
-    }
+/// The QuoteRepository interface.
+public interface QuoteRepository extends JpaRepository<Quote, Long> {
 }
