@@ -31,12 +31,11 @@ package net.jmp.spring.boot.react.quote;
  */
 
 import java.util.List;
-import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,19 +51,30 @@ public class QuoteController {
 
     /// The constructor.
     ///
-    /// @param  repository  net.jmp.spring.boot.react.quote.QuoteRepository
+    /// @param repository net.jmp.spring.boot.react.quote.QuoteRepository
     public QuoteController(final QuoteRepository repository) {
         this.repository = repository;
     }
 
-    /// The hello method.
+    /// The OK method.
     ///
-    /// @return  java.lang.String
-    @GetMapping("/hello")
-    public String hello() {
-        this.logger.info("Hello, World!");
-        this.logger.debug("Hello, World, in debug.");
+    /// @return net.jmp.spring.boot.react.quote.QuoteResource
+    @GetMapping("/ok")
+    public QuoteResource ok() {
+        final Quote quote = new Quote("OK");
 
-        return "Hello, World!";
+        quote.setId(0L);
+
+        return new QuoteResource(quote, "success");
+    }
+
+    /// The get all method.
+    ///
+    /// @return java.util.List<net.jmp.spring.boot.react.quote.QuoteResource>
+    @GetMapping("/all")
+    public List<QuoteResource> getAll() {
+        return this.repository.findAll().stream()
+                .map(quote -> new QuoteResource(quote, "success"))
+                .toList();
     }
 }
