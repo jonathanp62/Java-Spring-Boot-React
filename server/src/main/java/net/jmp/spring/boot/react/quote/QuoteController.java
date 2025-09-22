@@ -38,6 +38,9 @@ import static net.jmp.util.logging.LoggerUtils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,9 +68,9 @@ public class QuoteController {
 
     /// The OK method.
     ///
-    /// @return net.jmp.spring.boot.react.quote.QuoteResource
+    /// @return org.springframework.http.ResponseEntity<net.jmp.spring.boot.react.quote.QuoteResource>
     @GetMapping("/ok")
-    public QuoteResource ok() {
+    public ResponseEntity<QuoteResource> ok() {
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(entry());
         }
@@ -76,7 +79,7 @@ public class QuoteController {
 
         quote.setId(0L);
 
-        final QuoteResource result = new QuoteResource(quote, "success");
+        final ResponseEntity<QuoteResource> result = new ResponseEntity<>(new QuoteResource(quote, "success"), HttpStatus.OK);
 
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(exitWith(result));
@@ -88,21 +91,21 @@ public class QuoteController {
     /// The get one method.
     ///
     /// @param  id  java.lang.Long
-    /// @return     net.jmp.spring.boot.react.quote.QuoteResource
+    /// @return     org.springframework.http.ResponseEntity<net.jmp.spring.boot.react.quote.QuoteResource>
     @GetMapping("/{id}")
-    public QuoteResource getOne(final @PathVariable Long id) {
+    public ResponseEntity<QuoteResource> getOne(final @PathVariable Long id) {
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(entryWith(id));
         }
 
-        final QuoteResource result = this.repository.findById(id)
-                .map(quote -> new QuoteResource(quote, "success"))
+        final ResponseEntity<QuoteResource> result = this.repository.findById(id)
+                .map(quote -> new ResponseEntity<>(new QuoteResource(quote, "success"), HttpStatus.OK))
                 .orElseGet(() -> {
                     final Quote quote = new Quote("");
 
                     quote.setId(id);
 
-                    return new QuoteResource(quote, "Not found");
+                    return new ResponseEntity<>(new QuoteResource(quote, "Not found"), HttpStatus.NOT_FOUND);
                 });
 
         if (this.logger.isTraceEnabled()) {
@@ -114,16 +117,16 @@ public class QuoteController {
 
     /// The get all method.
     ///
-    /// @return java.util.List<net.jmp.spring.boot.react.quote.QuoteResource>
+    /// @return org.springframework.http.ResponseEntity<java.util.List<net.jmp.spring.boot.react.quote.QuoteResource>>
     @GetMapping("/all")
-    public List<QuoteResource> getAll() {
+    public ResponseEntity<List<QuoteResource>> getAll() {
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(entry());
         }
 
-        final List<QuoteResource> result = this.repository.findAll().stream()
+        final ResponseEntity<List<QuoteResource>> result = new ResponseEntity<>(this.repository.findAll().stream()
                 .map(quote -> new QuoteResource(quote, "success"))
-                .toList();
+                .toList(), HttpStatus.OK);
 
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(exitWith(result));
@@ -134,14 +137,14 @@ public class QuoteController {
 
     /// The get random one method.
     ///
-    /// @return net.jmp.spring.boot.react.quote.QuoteResource
+    /// @return org.springframework.http.ResponseEntity<net.jmp.spring.boot.react.quote.QuoteResource>
     @GetMapping("/random")
-    public QuoteResource getRandomOne() {
+    public ResponseEntity<QuoteResource> getRandomOne() {
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(entry());
         }
 
-        final QuoteResource result = this.getOne(nextLong(1, this.repository.count() + 1));
+        final ResponseEntity<QuoteResource> result = this.getOne(nextLong(1, this.repository.count() + 1));
 
         if (this.logger.isTraceEnabled()) {
             this.logger.trace(exitWith(result));
