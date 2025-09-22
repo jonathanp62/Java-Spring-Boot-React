@@ -5,6 +5,9 @@ A program that demonstrates setting up a Spring Boot REST application that also 
 
 I need to document API endpoints.
 
+The person API is at /person.
+The quote API is at /quote.
+
 Gradle JavaExec Tasks
 ~~~~~~~~~~~~~~~~~~~~~
 
