@@ -5,6 +5,8 @@ A program that demonstrates setting up a Spring Boot REST application that also 
 
 I need to document API endpoints.
 
+Need to run 'npm install react-router-dom'
+
 The person API is at /person.
 The quote API is at /quote.
 
