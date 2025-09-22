@@ -53,6 +53,9 @@
         <logger name="net.jmp.spring.boot.react" additivity="false" level="debug">
             <appender-ref ref="ECS_JSON_CONSOLE" />
         </logger>
+        <logger name="net.jmp.spring.boot.react.person" additivity="false" level="debug">
+            <appender-ref ref="ECS_JSON_CONSOLE" />
+        </logger>
         <logger name="net.jmp.spring.boot.react.quote" additivity="false" level="debug">
             <appender-ref ref="ECS_JSON_CONSOLE" />
         </logger>
@@ -94,8 +97,11 @@
         <logger name="net.jmp.spring.boot.react.MainApplication" additivity="false" level="info">
             <appender-ref ref="ECS_JSON_FILE" />
         </logger>
+        <logger name="net.jmp.spring.boot.react.person" additivity="false" level="info">
+            <appender-ref ref="ECS_JSON_FILE" />
+        </logger>
         <logger name="net.jmp.spring.boot.react.quote" additivity="false" level="info">
-            <appender-ref ref="ECS_JSON_CONSOLE" />
+            <appender-ref ref="ECS_JSON_FILE" />
         </logger>
         <logger name="org.springframework.beans" additivity="false" level="warn">
             <appender-ref ref="ECS_JSON_FILE" />
