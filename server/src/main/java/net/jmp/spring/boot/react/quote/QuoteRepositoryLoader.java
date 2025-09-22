@@ -30,6 +30,11 @@ package net.jmp.spring.boot.react.quote;
  * SOFTWARE.
  */
 
+import static net.jmp.util.logging.LoggerUtils.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.springframework.boot.CommandLineRunner;
 
 import org.springframework.context.annotation.Bean;
@@ -38,6 +43,9 @@ import org.springframework.context.annotation.Configuration;
 /// The quote repository loader class.
 @Configuration
 public class QuoteRepositoryLoader {
+    /// The logger.
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     /// The default constructor.
     public QuoteRepositoryLoader() {
         super();
@@ -49,6 +57,14 @@ public class QuoteRepositoryLoader {
     /// @return             org.springframework.boot.CommandLineRunner
     @Bean
     CommandLineRunner load(final QuoteRepository repository) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entry());
+        }
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exit());
+        }
+
         return args -> {
             repository.save(new Quote("Working with Spring Boot is like pair-programming with the Spring developers."));
             repository.save(new Quote("With Boot you deploy everywhere you can find a JVM basically."));
