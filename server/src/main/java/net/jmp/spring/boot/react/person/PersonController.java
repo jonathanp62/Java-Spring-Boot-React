@@ -108,4 +108,31 @@ public class PersonController {
 
         return result;
     }
+
+    /// The one method.
+    ///
+    /// @param  id  java.lang.Long
+    /// @return     org.springframework.http.ResponseEntity<java.lang.Object>
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> one(final @PathVariable Long id) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(id));
+        }
+
+        final Person person = this.people.getOrDefault(id, null);
+
+        ResponseEntity<Object> result;
+
+        if (person == null) {
+            result = new ResponseEntity<>(new PersonApiError("Not found", "Person with identifier '" + id + "' was not found"), HttpStatus.NOT_FOUND);
+        } else {
+            result = new ResponseEntity<>(person, HttpStatus.OK);
+        }
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exitWith(result));
+        }
+
+        return result;
+    }
 }
