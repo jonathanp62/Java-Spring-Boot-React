@@ -3,6 +3,8 @@ Spring-Boot-React
 
 A program that demonstrates setting up a Spring Boot REST application that also uses React.
 
+I need to document API endpoints.
+
 Gradle JavaExec Tasks
 ~~~~~~~~~~~~~~~~~~~~~
 
