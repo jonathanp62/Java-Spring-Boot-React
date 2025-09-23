@@ -32,21 +32,29 @@ import React, { useState, useEffect } from 'react';
 
 const PersonComponent = () => {
     const [ok, setOk] = useState(null);
+    const [people, setPeople] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchOk = async () => {
+        const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/person/ok');
+                const [responseOK, responsePeople] = await Promise.all([
+                    fetch('http://localhost:8080/api/person/ok'),
+                    fetch('http://localhost:8080/api/person/people')
+                ]);
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                if (responseOK.ok && responsePeople.ok) {
+                    const resultOK = await responseOK.text();
+                    const resultPeople = await responsePeople.json();
+
+                    setOk(resultOK);
+                    setPeople(resultPeople);
+                } else if (!responseOK.ok) {
+                    setError(`OK API HTTP error: ${responseOK.status}`);
+                } else if (!responsePeople.ok) {
+                    setError(`People API HTTP error: ${responsePeople.status}`);
                 }
-
-                const data = await response.text();
-
-                setOk(data);
             } catch (e) {
                 setError(e.message);
             } finally {
@@ -54,7 +62,7 @@ const PersonComponent = () => {
             }
         };
 
-        fetchOk();
+        fetchData();
     }, []); // The empty dependency array ensures this effect runs only once
 
     if (isLoading) {
@@ -69,6 +77,15 @@ const PersonComponent = () => {
         <div>
             <h2>Person API</h2>
             <p>OK API: {ok}</p>
+            <table>
+                {people.map((person) => (
+                    <tr key={person.id}>
+                        <td>{person.id}</td>
+                        <td>{person.firstName} {person.lastName}</td>
+                        <td>{person.phoneNumber}</td>
+                        <td>{person.emailAddress}</td>
+                    </tr>))}
+            </table>
         </div>
     );
 };
