@@ -2,7 +2,7 @@
  * (#)QuoteComponent.js  0.1.0   09/23/2025
  *
  * @author  Jonathan Parker
- * @version 0.3.0
+ * @version 0.1.0
  * @since   0.1.0
  *
  * MIT License
@@ -41,6 +41,8 @@ const QuoteComponent = () => {
         // Define an async function to perform the fetch
         const fetchData = async () => {
             try {
+                // To wait on a single fetch: const response = await fetch('http://localhost:8080/api/person/ok');
+
                 const [responseOK, responseRandom, responseAll] = await Promise.all([
                     fetch('http://localhost:8080/api/quote/ok'),
                     fetch('http://localhost:8080/api/quote/random'),

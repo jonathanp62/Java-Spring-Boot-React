@@ -2,7 +2,7 @@
  * (#)PersonComponent.js    0.1.0   09/23/2025
  *
  * @author  Jonathan Parker
- * @version 0.3.0
+ * @version 0.1.0
  * @since   0.1.0
  *
  * MIT License
@@ -36,7 +36,6 @@ const PersonComponent = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        // Define an async function to perform the fetch
         const fetchOk = async () => {
             try {
                 const response = await fetch('http://localhost:8080/api/person/ok');
