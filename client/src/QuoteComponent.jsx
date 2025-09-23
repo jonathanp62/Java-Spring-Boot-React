@@ -1,5 +1,5 @@
 /*
- * (#)QuoteComponent.js  0.1.0   09/23/2025
+ * (#)QuoteComponent.jsx    0.1.0   09/23/2025
  *
  * @author  Jonathan Parker
  * @version 0.1.0
