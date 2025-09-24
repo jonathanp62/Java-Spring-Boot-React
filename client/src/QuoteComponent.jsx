@@ -30,6 +30,8 @@
 
 import React, { useState, useEffect } from 'react';
 
+import QuoteFinder from "./QuoteFinder";
+
 const QuoteComponent = () => {
     const [ok, setOk] = useState(null);
     const [random, setRandom] = useState(null);
@@ -95,6 +97,7 @@ const QuoteComponent = () => {
                         <td>{quote.type}</td>
                     </tr>))}
             </table>
+            <QuoteFinder />
         </div>
     );
 };

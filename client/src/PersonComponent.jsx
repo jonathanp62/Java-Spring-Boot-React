@@ -30,6 +30,8 @@
 
 import React, { useState, useEffect } from 'react';
 
+import PersonFinder from "./PersonFinder";
+
 const PersonComponent = () => {
     const [ok, setOk] = useState(null);
     const [people, setPeople] = useState(null);
@@ -86,6 +88,7 @@ const PersonComponent = () => {
                         <td>{person.emailAddress}</td>
                     </tr>))}
             </table>
+            <PersonFinder />
         </div>
     );
 };
