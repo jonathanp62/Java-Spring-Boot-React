@@ -47,7 +47,7 @@ const PersonFinder = () => {
 
                 if (response.ok) {
                     const data = await response.json();
-                    
+
                     setPerson(data);
                 } else if (response.status === 404) {
                     setMessage(`Person ${personId} not found`);
