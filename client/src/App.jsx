@@ -28,12 +28,12 @@
  * SOFTWARE.
  */
 
-import './App.css';
+import './styles/App.css';
 
 import { Link, Route, Routes } from 'react-router-dom';
 
-import PersonComponent from "./PersonComponent";
-import QuoteComponent from "./QuoteComponent";
+import PersonComponent from "./components/PersonComponent";
+import QuoteComponent from "./components/QuoteComponent";
 
 function App() {
   return (
