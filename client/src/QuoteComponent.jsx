@@ -28,6 +28,8 @@
  * SOFTWARE.
  */
 
+import "./Tables.css";
+
 import React, { useState, useEffect } from 'react';
 
 import QuoteFinder from "./QuoteFinder";
@@ -89,7 +91,7 @@ const QuoteComponent = () => {
             <h2>Quote API</h2>
             <p>{ok.value.text}: {ok.type}</p>
             <p>Random {random.value.id}: {random.type} - {random.value.text}</p>
-            <table>
+            <table className="table-container">
                 {all.map((quote) => (
                     <tr key={quote.value.id}>
                         <td>{quote.value.id}</td>
@@ -97,6 +99,7 @@ const QuoteComponent = () => {
                         <td>{quote.type}</td>
                     </tr>))}
             </table>
+            <p/>
             <QuoteFinder />
         </div>
     );

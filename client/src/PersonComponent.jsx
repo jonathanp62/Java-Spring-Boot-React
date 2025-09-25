@@ -28,6 +28,8 @@
  * SOFTWARE.
  */
 
+import "./Tables.css";
+
 import React, { useState, useEffect } from 'react';
 
 import PersonFinder from "./PersonFinder";
@@ -79,7 +81,7 @@ const PersonComponent = () => {
         <div>
             <h2>Person API</h2>
             <p>OK API: {ok}</p>
-            <table>
+            <table className="table-container">
                 {people.map((person) => (
                     <tr key={person.id}>
                         <td>{person.id}</td>
@@ -88,6 +90,7 @@ const PersonComponent = () => {
                         <td>{person.emailAddress}</td>
                     </tr>))}
             </table>
+            <p/>
             <PersonFinder />
         </div>
     );
