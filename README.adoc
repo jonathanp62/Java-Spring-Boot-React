@@ -15,10 +15,19 @@ Creating the React Client
 * Run 'npx create-react-app client' from the application root directory.
 * Run 'npm install react-router-dom' from the client directory.
 
-I need to document API endpoints.
+REST API Endpoints
+~~~~~~~~~~~~~~~~~~
 
-The person API is at /person.
-The quote API is at /quote.
+[options="header"]
+|=======================
+|Endpoint           |HTTP Method | Payload | HTTP Responses        | Description
+|/api/person/ok     | GET        | None    | 200 OK                | Returns a string: OK
+|/api/person/{id}   | GET        | None    | 200 OK, 404 Not Found | Returns a person as JSON: {"status":"OK","id":2,"lastName":"Doe","firstName":"John","phoneNumber":"555-234-5678","emailAddress":"john.doe@domain.com"}
+|/api/person/people | GET        | None    | 200 OK                | Returns a list of persons as JSON: [{"status":"OK","id":2,"lastName":"Doe","firstName":"John","phoneNumber":"555-234-5678","emailAddress":"john.doe@domain.com"}]
+|/api/person        | POST       | JSON    | 201 Created           | Creates a person from JSON: {"lastName":"Doe","firstName":"John","phoneNumber":"555-234-5678","emailAddress":"john.doe@domain.com"}
+|/api/person/{id}   | PUT        | JSON    | 200 OK                | Updates a person from JSON: {"lastName":"Doe","firstName":"John","phoneNumber":"555-234-5678","emailAddress":"john.doe@domain.com"}; the updated person is returned as JSON
+
+|=======================
 
 Gradle JavaExec Tasks
 ~~~~~~~~~~~~~~~~~~~~~
