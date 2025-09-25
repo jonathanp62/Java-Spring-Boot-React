@@ -42,8 +42,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import java.util.concurrent.atomic.AtomicLong;
 
 /// The person controller.
 @CrossOrigin(origins = "http://localhost:3000")
@@ -55,16 +58,21 @@ public class PersonController {
 
     /// The people.
     private final Map<Long, Person> people;
+    
+    /// The counter for generating new person identifiers.
+    private final AtomicLong idCounter;
 
     /// The constructor.
     public PersonController() {
         super();
 
-        this.people = Map.of(
+        this.people = new HashMap<>(Map.of(
                 1L, new Person("OK", 1L, "Spock", "Mister", "555-123-4567", "spock@domain.com"),
                 2L, new Person("OK", 2L, "Kirk", "James", "555-234-5678", "james@domain.com"),
                 3L, new Person("OK", 3L, "McCoy", "Leonard", "555-345-6789", "leonard@domain.com")
-        );
+        ));
+        
+        this.idCounter = new AtomicLong(3L); // Start from 4 since we have 3 existing people
     }
 
     /// The OK method.
@@ -125,6 +133,111 @@ public class PersonController {
             result = new ResponseEntity<>(new PersonApiError("Not found", "Person with identifier '" + id + "' was not found"), HttpStatus.NOT_FOUND);
         } else {
             result = new ResponseEntity<>(person, HttpStatus.OK);
+        }
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exitWith(result));
+        }
+
+        return result;
+    }
+
+    /// The create method.
+    ///
+    /// @param  personRequest   net.jmp.spring.boot.react.person.PersonRequest
+    /// @return                 org.springframework.http.ResponseEntity<java.lang.Object>
+    @PostMapping
+    public ResponseEntity<Object> create(final @RequestBody PersonRequest personRequest) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(personRequest));
+        }
+
+        ResponseEntity<Object> result;
+
+        try {
+            /* Validate the request */
+
+            if (personRequest.lastName() == null || personRequest.lastName().trim().isEmpty()) {
+                result = new ResponseEntity<>(new PersonApiError("Validation Error", "Last name is required"), HttpStatus.BAD_REQUEST);
+            } else if (personRequest.firstName() == null || personRequest.firstName().trim().isEmpty()) {
+                result = new ResponseEntity<>(new PersonApiError("Validation Error", "First name is required"), HttpStatus.BAD_REQUEST);
+            } else {
+                final Long newId = this.idCounter.incrementAndGet();    // Generate new ID
+                
+                /* Create the new person */
+
+                final Person newPerson = new Person(
+                    "OK",
+                    newId,
+                    personRequest.lastName().trim(),
+                    personRequest.firstName().trim(),
+                    personRequest.phoneNumber() != null ? personRequest.phoneNumber().trim() : "",
+                    personRequest.emailAddress() != null ? personRequest.emailAddress().trim() : ""
+                );
+
+                this.people.put(newId, newPerson);  // Add to the collection
+                
+                /* Return created person with 201 status */
+
+                result = new ResponseEntity<>(newPerson, HttpStatus.CREATED);
+            }
+        } catch (Exception e) {
+            this.logger.error("Error creating person", e);
+
+            result = new ResponseEntity<>(new PersonApiError("Internal Error", "An error occurred while creating the person"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exitWith(result));
+        }
+
+        return result;
+    }
+
+    /// The update method
+    ///
+    /// @param  id             java.lang.Long
+    /// @param  personRequest  net.jmp.spring.boot.react.person.PersonRequest
+    /// @return                org.springframework.http.ResponseEntity<java.lang.Object>
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update(final @PathVariable Long id, final @RequestBody PersonRequest personRequest) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(id, personRequest));
+        }
+
+        ResponseEntity<Object> result;
+
+        try {
+            /* Check if person exists and validate the request */
+
+            if (!this.people.containsKey(id)) {
+                result = new ResponseEntity<>(new PersonApiError("Not Found", "Person with identifier '" + id + "' was not found"), HttpStatus.NOT_FOUND);
+            } else if (personRequest.lastName() == null || personRequest.lastName().trim().isEmpty()) {
+                result = new ResponseEntity<>(new PersonApiError("Validation Error", "Last name is required"), HttpStatus.BAD_REQUEST);
+            } else if (personRequest.firstName() == null || personRequest.firstName().trim().isEmpty()) {
+                result = new ResponseEntity<>(new PersonApiError("Validation Error", "First name is required"), HttpStatus.BAD_REQUEST);
+            } else {
+                /* Update the existing person */
+
+                final Person updatedPerson = new Person(
+                    "OK",
+                    id,
+                    personRequest.lastName().trim(),
+                    personRequest.firstName().trim(),
+                    personRequest.phoneNumber() != null ? personRequest.phoneNumber().trim() : "",
+                    personRequest.emailAddress() != null ? personRequest.emailAddress().trim() : ""
+                );
+
+                this.people.put(id, updatedPerson); // Update in the collection
+                
+                /* Return the updated person */
+
+                result = new ResponseEntity<>(updatedPerson, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            this.logger.error("Error updating person", e);
+
+            result = new ResponseEntity<>(new PersonApiError("Internal Error", "An error occurred while updating the person"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         if (this.logger.isTraceEnabled()) {

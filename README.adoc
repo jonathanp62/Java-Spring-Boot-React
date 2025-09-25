@@ -3,15 +3,27 @@ Spring-Boot-React
 
 A program that demonstrates setting up a Spring Boot REST application that also uses React.
 
-I need to document API endpoints.
+Directory Structure
+~~~~~~~~~~~~~~~~~~~~
 
-Need to run 'npm install react-router-dom'
+* The Java server application is in the server directory. The Gradle build file defines the locations of the source files and resources.
+* The React client application is in the client directory.
+
+Creating the React Client
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Run 'npx create-react-app client' from the application root directory.
+* Run 'npm install react-router-dom' from the client directory.
+
+I need to document API endpoints.
 
 The person API is at /person.
 The quote API is at /quote.
 
 Gradle JavaExec Tasks
 ~~~~~~~~~~~~~~~~~~~~~
+
+Add the --no-configuration-cache option to disable the configuration cache when running bootRun tasks.
 
 [options="header"]
 |=======================
@@ -20,6 +32,18 @@ Gradle JavaExec Tasks
 |bootRunDev             |No arguments
 |bootRunTest            |No arguments
 |=======================
+
+Running the React application
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* Run 'npm start' from the client directory.
+
+Scripts
+~~~~~~~
+
+* bin/create-person.sh
+* bin/update-person.sh
+* bin/shutdown.sh
 
 Current version: 0.1.0.
 ~~~~~~~~~~~~~~~~~~~~~~~
