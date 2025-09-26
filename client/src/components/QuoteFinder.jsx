@@ -32,7 +32,7 @@ import React, { useState } from "react";
 
 const QuoteFinder = () => {
     const [message, setMessage] = useState(null);
-    const [quoteId, setQuoteId] = useState(null);
+    const [quoteId, setQuoteId] = useState('');
     const [quote, setQuote] = useState(null);
 
     const handleSubmit = (e) => {

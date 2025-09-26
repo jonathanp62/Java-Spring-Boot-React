@@ -92,12 +92,14 @@ const QuoteComponent = () => {
             <p>{ok.value.text}: {ok.type}</p>
             <p>Random {random.value.id}: {random.type} - {random.value.text}</p>
             <table className="table-container">
-                {all.map((quote) => (
-                    <tr key={quote.value.id}>
-                        <td>{quote.value.id}</td>
-                        <td>{quote.value.text}</td>
-                        <td>{quote.type}</td>
-                    </tr>))}
+                <tbody>
+                    {all.map((quote) => (
+                        <tr key={quote.value.id}>
+                            <td>{quote.value.id}</td>
+                            <td>{quote.value.text}</td>
+                            <td>{quote.type}</td>
+                        </tr>))}
+                </tbody>
             </table>
             <p/>
             <QuoteFinder />

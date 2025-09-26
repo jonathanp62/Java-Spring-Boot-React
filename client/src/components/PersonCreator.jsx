@@ -33,7 +33,7 @@ import "./Tables.css";
 import React, { useState } from "react";
 
 const PersonCreator = () => {
-    const [message, setMessage] = useState(null);
+    const [error, setError] = useState(null);
 
     const [formData, setFormData] = useState({
         lastName: '',
@@ -56,26 +56,32 @@ const PersonCreator = () => {
 
         const savePerson = async() => {
             try {
-                setMessage(null);
-
-                const response = await fetch(`http://localhost:8080/api/person/1`);
+                const response = await fetch(`http://localhost:8080/api/person`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
 
                 if (response.ok) {
                     const data = await response.json();
+
+                    console.log(`Person created: ${data}`);
                 } else {
-                    console.error(`HTTP error! status: ${response.status}`);
+                    setError(`HTTP error! status: ${response.status}`);
                 }
             } catch (e) {
-                console.error(e);
+                setError(e.message);
             }
         };
 
-        const json = JSON.stringify(formData);
-
-        console.log(json); // Example: use JSON object here
-
         savePerson();
     };
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
 
     return (
         <div>
