@@ -32,6 +32,7 @@ import "./Tables.css";
 
 import React, { useState, useEffect } from 'react';
 
+import PersonCreator from "./PersonCreator";
 import PersonFinder from "./PersonFinder";
 
 const PersonComponent = () => {
@@ -82,16 +83,20 @@ const PersonComponent = () => {
             <h2>Person API</h2>
             <p>OK API: {ok}</p>
             <table className="table-container">
-                {people.map((person) => (
-                    <tr key={person.id}>
-                        <td>{person.id}</td>
-                        <td>{person.firstName} {person.lastName}</td>
-                        <td>{person.phoneNumber}</td>
-                        <td>{person.emailAddress}</td>
-                    </tr>))}
+                <tbody>
+                    {people.map((person) => (
+                        <tr key={person.id}>
+                            <td>{person.id}</td>
+                            <td>{person.firstName} {person.lastName}</td>
+                            <td>{person.phoneNumber}</td>
+                            <td>{person.emailAddress}</td>
+                        </tr>))}
+                </tbody>
             </table>
             <p/>
             <PersonFinder />
+            <p/>
+            <PersonCreator />
         </div>
     );
 };

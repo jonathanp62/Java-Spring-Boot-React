@@ -32,7 +32,7 @@ import React, { useState } from "react";
 
 const PersonFinder = () => {
     const [message, setMessage] = useState(null);
-    const [personId, setPersonId] = useState(null);
+    const [personId, setPersonId] = useState('');
     const [person, setPerson] = useState(null);
 
     const handleSubmit = (e) => {
