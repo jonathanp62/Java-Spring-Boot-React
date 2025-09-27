@@ -246,4 +246,36 @@ public class PersonController {
 
         return result;
     }
+
+    /// The delete method.
+    ///
+    /// @param  id  java.lang.Long
+    /// @return     org.springframework.http.ResponseEntity<java.lang.Object>
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable Long id) {
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(entryWith(id));
+        }
+
+        ResponseEntity<Object> result;
+
+        try {
+            if (!this.people.containsKey(id)) {
+                result = new ResponseEntity<>(new PersonApiError("Not Found", "Person with identifier '" + id + "' was not found"), HttpStatus.NOT_FOUND);
+            } else {
+                this.people.remove(id);
+
+                result = new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            this.logger.error("Error deleting person", e);
+            result = new ResponseEntity<>(new PersonApiError("Internal Error", "An error occurred while deleting the person"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        if (this.logger.isTraceEnabled()) {
+            this.logger.trace(exitWith(result));
+        }
+
+        return result;
+    }
 }
