@@ -40,6 +40,11 @@ const PersonComponent = () => {
     const [people, setPeople] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [refreshKey, setRefreshKey] = useState(0);
+
+    const triggerRefresh = () => {
+        setRefreshKey(prev => prev + 1); // Changing state triggers re-render
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -68,7 +73,7 @@ const PersonComponent = () => {
         };
 
         fetchData();
-    }, []); // The empty dependency array ensures this effect runs only once
+    }, [refreshKey]); // The empty dependency array ensures this effect runs only once
 
     if (isLoading) {
         return <div>Loading ok...</div>;
@@ -96,7 +101,7 @@ const PersonComponent = () => {
             <p/>
             <PersonFinder />
             <p/>
-            <PersonCreator />
+            <PersonCreator onRefresh={triggerRefresh}/>
         </div>
     );
 };

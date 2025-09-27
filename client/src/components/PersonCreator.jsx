@@ -32,7 +32,7 @@ import "./Tables.css";
 
 import React, { useState } from "react";
 
-const PersonCreator = () => {
+const PersonCreator = ({ onRefresh }) => {
     const [error, setError] = useState(null);
 
     const [formData, setFormData] = useState({
@@ -77,6 +77,7 @@ const PersonCreator = () => {
         };
 
         savePerson();
+        onRefresh();
     };
 
     if (error) {
