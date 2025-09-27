@@ -28,7 +28,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+# Usage:
+#       delete-person.sh <id>
+
+if [ "$#" -ne 1 ]
+then
+        echo "Usage: $0 <id>"
+        exit 1
+fi
+
 SITE="http://localhost:8080"
-ID="4"
+ID="${1}"
 
 curl -X DELETE ${SITE}/api/person/${ID}

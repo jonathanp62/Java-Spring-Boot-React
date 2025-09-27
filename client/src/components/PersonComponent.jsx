@@ -73,7 +73,7 @@ const PersonComponent = () => {
         };
 
         fetchData();
-    }, [refreshKey]); // The empty dependency array ensures this effect runs only once
+    }, [refreshKey]);   // Re-render when refreshKey changes
 
     if (isLoading) {
         return <div>Loading ok...</div>;

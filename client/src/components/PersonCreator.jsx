@@ -65,9 +65,10 @@ const PersonCreator = ({ onRefresh }) => {
                 });
 
                 if (response.ok) {
-                    const data = await response.json();
+                    const person = await response.json();
 
-                    console.log(`Person created: ${data}`);
+                    console.log(`Person created: ${person.firstName} ${person.lastName}`);
+                    onRefresh();
                 } else {
                     setError(`HTTP error! status: ${response.status}`);
                 }
@@ -77,7 +78,6 @@ const PersonCreator = ({ onRefresh }) => {
         };
 
         savePerson();
-        onRefresh();
     };
 
     if (error) {
