@@ -33,6 +33,7 @@ import "./Tables.css";
 import React, { useState, useEffect } from 'react';
 
 import PersonCreator from "./PersonCreator";
+import PersonDeleter from "./PersonDeleter";
 import PersonFinder from "./PersonFinder";
 
 const PersonComponent = () => {
@@ -102,6 +103,8 @@ const PersonComponent = () => {
             <PersonFinder />
             <p/>
             <PersonCreator onRefresh={triggerRefresh}/>
+            <p/>
+            <PersonDeleter onRefresh={triggerRefresh}/>
         </div>
     );
 };
