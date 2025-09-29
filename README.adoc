@@ -14,6 +14,7 @@ Creating the React Client
 
 * Run 'npx create-react-app client' from the application root directory.
 * Run 'npm install react-router-dom' from the client directory.
+* Please see the spring-boot application in $HOME/React-Projects as this application will be created with Vite but still use the Java Spring Boot React application's REST API endpoints.
 
 REST API Endpoints
 ~~~~~~~~~~~~~~~~~~
